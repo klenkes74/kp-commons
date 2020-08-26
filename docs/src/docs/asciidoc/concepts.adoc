@@ -1,0 +1,11 @@
+= Concepts
+
+== Architectural Concepts
+
+. Immutables instead of modifiable objects
+. Common meta data for all dto (even if they are not called dto any more).
+. Full test covrage for all human generated code
+
+== Context
+
+This is a base library containing all the interfaces and utilities used by my other projects (check github).

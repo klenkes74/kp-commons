@@ -1,0 +1,13 @@
+= KP-COMMONS
+Roland T. Lichti <rlichti@kaiserpfalz-edv.de>
+2.0, 2020-08-26 Utilities for java
+
+:toc:
+:icons: font
+:quick-uri: https://www.kaiserpfalz-edv.de/projects/kp-commons
+
+== Introduction
+
+This is a small library that started like all commons: some utilities are used in every project and instead of copy-n-paste I decided to generate a library of it instead.
+
+include::concepts.adoc[leveloffset=+1]
