@@ -20,6 +20,7 @@ package de.kaiserpfalzedv.commons.api;
 import de.kaiserpfalzedv.commons.version.Version;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * A generic base definition for datasets. This base does not contain any data
@@ -53,4 +54,11 @@ public interface BaseDataSet extends Serializable {
      * @return the metadata for this dataset.
      */
     Metadata metadata();
+
+    /**
+     * The log of changes to this data set.
+     *
+     * @return a set of data change logs of a data object.
+     */
+    Set<State> state();
 }

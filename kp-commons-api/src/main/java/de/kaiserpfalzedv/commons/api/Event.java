@@ -22,15 +22,19 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
 /**
- * A dataset containing data.
+ * An event is normally a state change of a certain data object.
  *
  * @author rlichti
- * @version 1.0.0 2020-08-15
- * @since 1.0.0 2020-08-15
+ * @version 1.0.0 2020-08-27
+ * @since 1.0.0 2020-08-27
  */
 @Immutable
 @Value.Immutable
-@JsonSerialize(as = DataPointerImmutable.class)
-@JsonDeserialize(builder = DataPointerImmutable.Builder.class)
-public interface DataPointer extends BaseDataSet {
+@JsonSerialize(as = EventImmutable.class)
+@JsonDeserialize(builder = EventImmutable.Builder.class)
+public interface Event extends BaseDataSet {
+    /**
+     * @return The data object the reported state(s) are valid for.
+     */
+    DataPointer object();
 }

@@ -24,6 +24,7 @@ import org.immutables.value.Value;
 
 import java.io.Serializable;
 import java.net.URL;
+import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,7 +38,6 @@ import java.util.UUID;
  */
 @Immutable
 @Value.Immutable
-@Value.Modifiable
 @JsonSerialize(as = MetadataImmutable.class)
 @JsonDeserialize(builder = MetadataImmutable.Builder.class)
 public interface Metadata extends Serializable {
@@ -71,9 +71,24 @@ public interface Metadata extends Serializable {
 
     /**
      * The dataset may be part of another one or "owned" by another dataset.
+     *
      * @return the owning construct.
      */
     Optional<BaseDataSet> owner();
+
+    /**
+     * @return The creation timestamp of this object.
+     */
+    Optional<OffsetDateTime> created();
+
+    /**
+     * When an object is to be deleted, it may be needed for consistency
+     * reasons or if it takes some time to cascade the delete. This is the
+     * timestamp of the deletion command.
+     *
+     * @return The deletion timestamp of this object.
+     */
+    Optional<OffsetDateTime> deleted();
 
     /**
      * Technical annotations to this dataset.
