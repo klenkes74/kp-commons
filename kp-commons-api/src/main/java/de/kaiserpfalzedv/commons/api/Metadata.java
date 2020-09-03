@@ -17,6 +17,8 @@
 
 package de.kaiserpfalzedv.commons.api;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import de.kaiserpfalzedv.commons.version.Version;
@@ -38,8 +40,9 @@ import java.util.UUID;
  */
 @Immutable
 @Value.Immutable
-@JsonSerialize(as = MetadataImmutable.class)
-@JsonDeserialize(builder = MetadataImmutable.Builder.class)
+@JsonSerialize
+@JsonDeserialize
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public interface Metadata extends Serializable {
     String kind();
     Version apiVersion();
@@ -74,11 +77,12 @@ public interface Metadata extends Serializable {
      *
      * @return the owning construct.
      */
-    Optional<BaseDataSet> owner();
+    Optional<DataPointer> owner();
 
     /**
      * @return The creation timestamp of this object.
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'")
     Optional<OffsetDateTime> created();
 
     /**
@@ -88,6 +92,7 @@ public interface Metadata extends Serializable {
      *
      * @return The deletion timestamp of this object.
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'")
     Optional<OffsetDateTime> deleted();
 
     /**

@@ -17,9 +17,10 @@
 
 package de.kaiserpfalzedv.commons.api;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.immutables.value.Value;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * A dataset containing a list of data.
@@ -28,9 +29,12 @@ import org.immutables.value.Value;
  * @version 1.0.0 2020-08-15
  * @since 1.0.0 2020-08-15
  */
-@Immutable
-@Value.Immutable
-@JsonSerialize
-@JsonDeserialize
-public interface DataPointer extends DataObject {
+@JsonPropertyOrder({"kind", "apiVersion", "metadata", "list"})
+public interface DataList<T extends Serializable> extends DataObject {
+    /**
+     * The data within this data set.
+     *
+     * @return the data.
+     */
+    List<T> list();
 }

@@ -17,6 +17,7 @@
 
 package de.kaiserpfalzedv.commons.api;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
@@ -36,8 +37,8 @@ import java.util.UUID;
  */
 @Immutable
 @Value.Immutable
-@JsonSerialize(as = StateImmutable.class)
-@JsonDeserialize(builder = StateImmutable.Builder.class)
+@JsonSerialize
+@JsonDeserialize
 public interface State extends Serializable {
     /**
      * The object got created.
@@ -94,5 +95,6 @@ public interface State extends Serializable {
     /**
      * @return The creation timestamp of this object.
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'")
     Optional<OffsetDateTime> created();
 }

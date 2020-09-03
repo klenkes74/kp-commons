@@ -17,22 +17,23 @@
 
 package de.kaiserpfalzedv.commons.api;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import de.kaiserpfalzedv.commons.version.Version;
 
 import java.io.Serializable;
-import java.util.Set;
 
 /**
- * A generic base definition for datasets. This base does not contain any data
- * but may be used as a pointer to some data.
+ * A dataset containing data.
  *
  * @author rlichti
  * @version 1.0.0 2020-08-15
  * @since 1.0.0 2020-08-15
  */
-public interface BaseDataSet extends Serializable {
+@JsonPropertyOrder({"kind", "apiVersion", "metadata"})
+public interface DataObject extends Serializable {
     /**
      * The type of dataset. Needs to be unique.
+     *
      * @return the type of this dataset.
      */
     default String kind() {
@@ -42,6 +43,7 @@ public interface BaseDataSet extends Serializable {
     /**
      * The version of this dataset defintion. Some services may support multiple
      * versions of this kind.
+     *
      * @return the version of the dataset defintion.
      */
     default Version apiVersion() {
@@ -54,11 +56,4 @@ public interface BaseDataSet extends Serializable {
      * @return the metadata for this dataset.
      */
     Metadata metadata();
-
-    /**
-     * The log of changes to this data set.
-     *
-     * @return a set of data change logs of a data object.
-     */
-    Set<State> state();
 }

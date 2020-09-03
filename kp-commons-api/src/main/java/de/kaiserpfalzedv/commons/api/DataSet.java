@@ -17,7 +17,11 @@
 
 package de.kaiserpfalzedv.commons.api;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A dataset containing data.
@@ -26,10 +30,19 @@ import java.io.Serializable;
  * @version 1.0.0 2020-08-15
  * @since 1.0.0 2020-08-15
  */
-public interface DataSet<T extends Serializable> extends BaseDataSet {
+@JsonPropertyOrder({"kind", "apiVersion", "metadata", "data", "state"})
+public interface DataSet<T extends Serializable> extends DataObject {
     /**
      * The data within this data set.
+     *
      * @return the data.
      */
-    T data();
+    Optional<T> data();
+
+    /**
+     * The log of changes to this data set.
+     *
+     * @return a set of data change logs of a data object.
+     */
+    default Optional<List<State>> state() { return Optional.empty(); }
 }

@@ -17,6 +17,8 @@
 
 package de.kaiserpfalzedv.commons.version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import de.kaiserpfalzedv.commons.api.Immutable;
@@ -24,6 +26,7 @@ import de.kaiserpfalzedv.commons.version.semver.Requirement;
 import de.kaiserpfalzedv.commons.version.semver.Semver;
 import org.immutables.value.Value;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.Optional;
 
@@ -37,8 +40,9 @@ import java.util.Optional;
  */
 @Immutable
 @Value.Immutable
-@JsonSerialize(as = VersionImmutable.class)
-@JsonDeserialize(builder = VersionImmutable.Builder.class)
+@JsonSerialize
+@JsonDeserialize
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public interface Version extends Serializable {
     static Version from(final Version orig) {
         return VersionImmutable.copyOf(orig);
@@ -95,6 +99,8 @@ public interface Version extends Serializable {
      */
     Optional<VersionType> type();
 
+    @Transient
+    @JsonIgnore
     @Value.Default
     default String value() {
         return semver().getValue();
@@ -107,6 +113,8 @@ public interface Version extends Serializable {
      * @return the version as backend object.
      * @deprecated this method is used internally - it will be removed as soon as the semver backend has been removed.
      */
+    @Transient
+    @JsonIgnore
     @Deprecated
     @Value.Default
     default Semver semver() {
@@ -118,6 +126,8 @@ public interface Version extends Serializable {
     }
 
 
+    @Transient
+    @JsonIgnore
     @Value.Default
     default void validate(VersionType type) {
         if (VersionType.STRICT.equals(type)) {
@@ -132,72 +142,85 @@ public interface Version extends Serializable {
     }
 
 
+    @JsonIgnore
     @Value.Default
     default boolean isGreaterThan(final String version) {
         return semver().isGreaterThan(version);
     }
 
+    @JsonIgnore
     @Value.Default
     default boolean isGreaterThan(final Version version) {
         return semver().isGreaterThan(version.semver());
     }
 
 
+    @JsonIgnore
     @Value.Default
     default boolean isGreaterThanOrEqualTo(final String version) {
         return semver().isGreaterThanOrEqualTo(version);
     }
 
+    @JsonIgnore
     @Value.Default
     default boolean isGreaterThanOrEqualTo(final Version version) {
         return semver().isGreaterThanOrEqualTo(version.semver());
     }
 
 
+    @JsonIgnore
     @Value.Default
     default boolean isLowerThan(final String version) {
         return semver().isLowerThan(version);
     }
 
+    @JsonIgnore
     @Value.Default
     default boolean isLowerThan(final Version version) {
         return semver().isLowerThan(version.semver());
     }
 
 
+    @JsonIgnore
     @Value.Default
     default boolean isLowerThanOrEqualTo(final String version) {
         return semver().isLowerThanOrEqualTo(version);
     }
 
+    @JsonIgnore
     @Value.Default
     default boolean isLowerThanOrEqualTo(final Version version) {
         return semver().isLowerThanOrEqualTo(version.semver());
     }
 
 
+    @JsonIgnore
     @Value.Default
     default boolean isEquivalentTo(final String version) {
         return semver().isEquivalentTo(version);
     }
 
+    @JsonIgnore
     @Value.Default
     default boolean isEquivalentTo(final Version version) {
         return semver().isEquivalentTo(version.semver());
     }
 
 
+    @JsonIgnore
     @Value.Default
     default boolean satisfies(final String requirement) {
         return semver().satisfies(requirement);
     }
 
+    @JsonIgnore
     @Value.Default
     default boolean satisfies(final Requirement requirement) {
         return semver().satisfies(requirement);
     }
 
 
+    @JsonIgnore
     @Value.Default
     default boolean isStable() {
         return major() > 0 && suffixes().isEmpty();
@@ -208,6 +231,7 @@ public interface Version extends Serializable {
      * @return the greatest difference
      * @see #diff(Version)
      */
+    @JsonIgnore
     @Value.Default
     default VersionDiff diff(final String version) {
         return VersionDiff.valueOf(semver().diff(version).name());
@@ -221,6 +245,7 @@ public interface Version extends Serializable {
      * @param version the version to compare
      * @return the greatest difference
      */
+    @JsonIgnore
     @Value.Default
     default VersionDiff diff(final Version version) {
         return VersionDiff.valueOf(semver().diff(version.semver()).name());
