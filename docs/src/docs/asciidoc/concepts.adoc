@@ -4,7 +4,7 @@
 
 . Immutables instead of modifiable objects
 . Common meta data for all dto (even if they are not called dto any more).
-. Full test covrage for all human generated code
+. Full test coverage for all human generated code
 
 == Context
 

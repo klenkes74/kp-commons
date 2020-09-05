@@ -1,0 +1,22 @@
+= Structured API
+
+== Copy is applaus
+
+The API part of the library mimics the behavior of the kubernetes API. Every object has at least 3 base elements:
+
+. `kind` -- the type of object.
+Allways in form of namespace/type (e.g. `de.kaiserpfalz-edv.skillbase/Skill`).
+. `apiVersion` -- the Version of this object.
+So a server or client may support multiple versions by checking on this element.
+. `metadata` -- generic metadata.
+It contains also the `kind` and `apiVersion`, an `UUID` of the object, a `scope` (or
+`./.` for unscoped objects) and a unique `name` for this `kind`.
+All other metadata are optional (`version`, `url`,
+`owner`, `created`, `deleted`, `labels`, and `annotations`)
+
+== Context
+
+The `metadata` is a well defined object to get the out-of-band information about an object.
+The `metadata` is standardized and found on all API objects.
+That may lead to some denormalization (like the name may also be part of the data set of the object).
+But with this `metadata` construct software has well defined paths to check the data and make decisions about working with it.

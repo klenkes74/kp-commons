@@ -5,7 +5,8 @@
 > -- Balian, Kingdom of Heaven
 
 ## Abstract
-
+This is the typical utility library. I try to generalize some functions or concepts I need in multiple projects. Don't
+know if there is some value to the world, but I'm ok with it for my use. Perhaps it helps others, too.
 
 ## License
 The license for the software is LGPL 3.0 or newer. The Semver part is MIT

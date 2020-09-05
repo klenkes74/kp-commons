@@ -16,14 +16,26 @@
  */
 
 plugins {
-    id 'org.asciidoctor.convert'
+    id 'org.asciidoctor.jvm.pdf' version '3.1.0'
+    id 'org.asciidoctor.jvm.gems' version '3.1.0'
 }
 
-asciidoctor {
-    sources {
-        include 'index.adoc'
-        include 'concepts.adoc'
+asciidoctorPdf {
+    dependsOn asciidoctorGemsPrepare
+
+    baseDirFollowsSourceFile()
+
+    asciidoctorj {
+        requires 'rouge'
+        attributes 'build-gradle': file('build.gradle'),
+                'endpoint-url': 'http://kaiserpfalz-edv.de',
+                'source-highlighter': 'rouge',
+                'imagesdir': './images',
+                'toc': 'left',
+                'icons': 'font',
+                'idprefix': '',
+                'idseparator': '-'
     }
 }
 
-build.dependsOn 'asciidoctor'
+task asciidoctor(dependsOn: asciidoctorPdf)
